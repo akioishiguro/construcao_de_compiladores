@@ -1,44 +1,65 @@
-def program(vector_program):
-    while
-
-########
-with open ('readme.md') as arq:
-        read_data = arq.read()
-file_vector=list(read_data)
-
-tam_text=len(file_vector)
-
-if file_vector[0]!="p":
-    print ("Erro Lexico")
-
-else:
-    vector_program=[]
-    vector_program_name=[]
-    i=0
-    a=0
-    while i < tam_text:
-        if file_vector[i] != " ":
-            if a == 0:
-                vector_program.append(file_vector[i])
-            if a == 1 :
-                if file_vector[i] != "{": 
-                    vector_program_name.append(file_vector[i])
-                else:
-                    a+=1
-            if a==2:
-                if file_vector[i] != "{":
-                    print("Erro Lexico")
-                a+=1         
-
-            if i == (tam_text-1) and file_vector[i] != "}":
-                print("Erro Lexico")
-        else:
-            a+=1
-        i+=1
+def comentario(line_atual):
+    for i in range(line_atual,num_lines):
+        line=read_data_lines[i].strip()#Ignorando os espacos/tab/enter
+        line_words=line.split(' ')##Dividimos as linhas em palavras
+        num_line_words=len(line_words)##NUmero de palavras na linha
+        for j in range(0,num_line_words):
+            if line_words[j].strip():
+                if line_words[j] == "*#":
+                    return i
+                elif i == num_lines-1 :
+                    return False
     
-    first_word=''.join(vector_program)
-    program_name=''.join(vector_program_name)
-    print(first_word)
-    print(program_name)
-    if first_word != "program":
-        print ("Erro Lexico")
+def inicio():
+    print("program")
+
+def procedimento():
+    print("procedimento")
+
+def constante():
+    print("constante")
+
+def variavel():
+    print("varialvel")
+
+def corpo():
+    print("corpo")
+
+with open ('arquivo_teste_1.md') as arq:
+        read_data = arq.read()##read_data é uma string
+
+
+read_data_lines=read_data.split('\n')
+num_lines=len(read_data_lines)
+num_words=len(read_data)##NUmero total de palavras no arquivo
+aux_end_com_bloco=0
+for i in range(0, num_lines):
+    line=read_data_lines[i].strip()#Ignorando os espacos/tab/enter
+    line_words=line.split(' ')##Dividimos as linhas em palavras
+    num_line_words=len(line_words)##NUmero de palavras na linha
+    for j in range(0, num_line_words):
+        if line_words[j].strip():
+            if line_words[j].startswith('#'):
+                if line_words[j].startswith('#*'):
+                    line_atual=i
+                    end_com_bloco=comentario(line_atual)
+                    if end_com_bloco != False and aux_end_com_bloco != end_com_bloco:
+                        aux_end_com_bloco=end_com_bloco
+                        print('Inicio do comentario de bloco na linha:', line_atual+1,' Final do Comentario de bloco na linha:',end_com_bloco+1)
+                        break
+                    else:
+                        print("ERRO LEXICO")
+                        break
+                else:
+                    print("temos um comentario na linha:",i)
+                    break
+            elif line_words[j] == "program" :
+                inicio()
+            elif line_words[j] == "procedure":
+                procedimento()
+            elif line_words[j] == "const":
+                constante()
+            elif line_words[j] == "declaravariaveis":
+                variavel()
+            elif line_words[j] == "begin":
+                corpo()
