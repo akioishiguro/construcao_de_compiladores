@@ -2,24 +2,42 @@
 #*    
         Comentario de bloco! 
         program nome_do_programa;
-            procedure nome_do_procedimento (paramentros_1:tipo ,parametro_2:tipo) 
+            procedure nome_do_procedimento (paramentros_A:tipo ,parametro_B:tipo) 
             begin
                 Procedimento
             end;
-*# 
+*#
+
 program nome_do_programa;
-    procedure nome_do_procedimento (paramentros_1:char ,parametro_2:tipo) 
+    procedure operacao_soma (variavel_A :integer, variavel_B:integer) 
     begin
-        Procedimento
+        if variavel_A <> variavel_B and variavel_A > variavel_B then 
+        begin 
+            soma = 10 + 5
+			write (soma)
+        end;
     end ;
- fs >=
-    const nome_da_constante = tipo_constante; nome_da_constante = tipo_constante;
+
+    const constante_um = real; constante_dois = real;
     
-    declaravariaveis nove_variavel: tipo; nove_variavel: tipo; 
+    declaravariaveis variavel_A:integer; variavel_B:integer; 
     
     begin
-        corpo 
+        variavel_A = 10
+        variavel_B = 5
+        chamaprocedure operacao_soma (variavel_A, variavel_B)
+
+        num_negativo_inteiro = - 1;
+        num_positivo_inteiro: 2;
+
+        num_negativo_real = - 12.456;
+        num_positivo_real = 789.10;
+
+        sinal de menos = -6;
+
+        subt= constante_um - constante_dois
+
+        identificador_com_erro = t3nt4t1v4
+
     end ;
 .
-
-
