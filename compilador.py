@@ -1,3 +1,4 @@
+import sys
 import re
 
 wordsDict = {"write": 0, "while": 1, "until": 2,  "to": 3,  "then": 4,  "string": 5,  "repeat": 6,  "real": 7,  "read": 8,  "program": 9,  "procedure": 10,  "or": 11,  "of": 12,  "literal": 13,  "integer": 14,  "if": 15,  "identificador": 16,  "î": 17,  "for": 18,  "end": 19,  "else": 20,  "do": 21,  "declaravariaveis": 22, "const": 23 ,"char": 24,  "chamaprocedure": 25,  "begin": 26,  "array": 27,  "and": 28,  "numreal": 36,  "numinteiro": 37, "nomestring": 38, "nomechar": 39}
@@ -34,7 +35,7 @@ def comentario(line_actual):
                 elif i == num_lines-1 :
                     return False
 
-def lexico(aux_word,aux_word_size):  
+def lexico(aux_word,aux_word_size,line_words):  
     for k in range(0,aux_word_size):
         if aux_word[k] in symbolsDict:  #Verifica se o Simbolo esta presente na gramatica
             if k!= aux_word_size-1: #Verifica se o Simbolo eh Concatenado
@@ -47,14 +48,58 @@ def lexico(aux_word,aux_word_size):
                         symbols_token_print.append(symbolsDict[comp_symbol])
                         symbols_line_print.append(i+1)
                         #print ("Simbolo:",comp_symbol,"Token:",symbolsDict[comp_symbol],"| Na linha:",i+1)
-                        break                    
+                        break                 
             #print ("Simbolo:",aux_word[k],"Token:",symbolsDict[aux_word[k]],"| Na linha:",i+1)
             symbols_name_print.append(aux_word[k])
             symbols_token_print.append(symbolsDict[aux_word[k]])
             symbols_line_print.append(i+1)
 
             aux_word[k]=aux_word[k].replace(aux_word[k]," ") #Troca o simbolo por espaco
-    
+        
+        elif aux_word[k] == '"':
+            count_string = j
+            get_name_string=[]
+            get_name_string.append(aux_word[k])
+            aux_word[k]=aux_word[k].replace(aux_word[k]," ") #Troca o simbolo por espaco
+            end_string = False
+            line_words[count_string]=line_words[count_string+1].replace(line_words[count_string+1]," ")
+            while count_string != num_line_words-1:
+                next_symbol= line_words[count_string+1]
+                get_name_string.append(next_symbol)
+                line_words[count_string+1]=line_words[count_string+1].replace(line_words[count_string+1]," ")
+                if next_symbol == '"':
+                    end_string = True
+                    words_name_print.append(get_name_string)
+                    words_token_print.append(wordsDict["nomestring"])
+                    words_line_print.append(i+1)
+                    break
+                else:
+                    count_string+=1
+            if end_string == False:
+                print ("Erro Lexico, na linha",i+1)
+
+        elif aux_word[k] == "'":
+            count_char = j
+            get_name_char=[]
+            get_name_char.append(aux_word[k])
+            end_char = False
+            aux_word[k]=aux_word[k].replace(aux_word[k]," ") #Troca o simbolo por espaco
+            line_words[count_char]=line_words[count_char+1].replace(line_words[count_char+1]," ")
+            while count_char != num_line_words-1:
+                next_symbol= line_words[count_char+1]
+                get_name_char.append(next_symbol)
+                line_words[count_char+1]=line_words[count_char+1].replace(line_words[count_char+1]," ")
+                if next_symbol == "'":
+                    end_char = True
+                    words_name_print.append(get_name_char)
+                    words_token_print.append(wordsDict["nomechar"])
+                    words_line_print.append(i+1)
+                    break
+                else:
+                    count_char+=1
+            if end_char == False:
+                print ("Erro Lexico, na linha",i+1)
+
     new_string="".join(map(str,aux_word)).strip().split(' ')
     num_new_string=len(new_string)
 
@@ -171,7 +216,8 @@ def number(aux_number,aux_number_size,line_words,line_actual):
                 continue       
     return line_words
 
-with open ('arquivo_teste_1.md') as arq:
+with open(sys.argv[1]) as arq:
+#with open("ex1.txt") as arq:
         read_data = arq.read()###read_data é o meu programa dentro de uma string
 
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
@@ -215,7 +261,7 @@ for i in range(0, num_lines):
                     
                     aux_word=list(line_words[j])
                     aux_word_size = len(aux_word)
-                    check_lexico=lexico(aux_word,aux_word_size)
+                    check_lexico=lexico(aux_word,aux_word_size,line_words)
 
 print_words(words_name_print)
 print_symbols(symbols_name_print)

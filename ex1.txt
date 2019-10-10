@@ -1,0 +1,17 @@
+program exemplo1;
+
+	declaravariaveis palavra_um: string; palavra_dois: string; palavra_dois: char;
+
+	begin
+		palavra_um = " Hello "
+		palavra_dois = " World! "
+
+                palavra_tres = ' a '
+
+		#comentario ignorado
+
+		write (palavra_um)
+		write (palavra_dois)
+                write (palavra_tres)
+	end
+.
