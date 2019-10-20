@@ -216,9 +216,9 @@ def number(aux_number,aux_number_size,line_words,line_actual):
                 continue       
     return line_words
 
-with open(sys.argv[1]) as arq:
-#with open("ex1.txt") as arq:
-        read_data = arq.read()###read_data é o meu programa dentro de uma string
+#with open(sys.argv[1]) as arq:
+with open("ex1.txt") as arq:
+    read_data = arq.read()###read_data é o meu programa dentro de uma string
 
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
 num_lines=len(read_data_lines)
@@ -259,9 +259,9 @@ for i in range(0, num_lines):
                             line_words=number(aux_number,aux_number_size,line_words,i)
                             ck_number=True
                     
-                    aux_word=list(line_words[j])
-                    aux_word_size = len(aux_word)
-                    check_lexico=lexico(aux_word,aux_word_size,line_words)
+                aux_word=list(line_words[j])
+                aux_word_size = len(aux_word)
+                check_lexico=lexico(aux_word,aux_word_size,line_words)
 
 print_words(words_name_print)
 print_symbols(symbols_name_print)
