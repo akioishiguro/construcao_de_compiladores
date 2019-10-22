@@ -162,8 +162,8 @@ def lexico(aux_word,aux_word_size,word,line_words):
                 print_line.append(wordsDict["identificador"]) 
             
                 
-#with open(sys.argv[1]) as arq:
-with open("ex1.txt") as arq:
+with open(sys.argv[1]) as arq:
+#with open("ex1.txt") as arq:
     read_data = arq.read()###read_data é o meu programa dentro de uma string
 
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
