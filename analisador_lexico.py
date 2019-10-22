@@ -1,9 +1,20 @@
 import sys
 import re
+import csv
+from collections import OrderedDict
 
 wordsDict = {"write": 0, "while": 1, "until": 2,  "to": 3,  "then": 4,  "string": 5,  "repeat": 6,  "real": 7,  "read": 8,  "program": 9,  "procedure": 10,  "or": 11,  "of": 12,  "literal": 13,  "integer": 14,  "if": 15,  "identificador": 16,  "î": 17,  "for": 18,  "end": 19,  "else": 20,  "do": 21,  "declaravariaveis": 22, "const": 23 ,"char": 24,  "chamaprocedure": 25,  "begin": 26,  "array": 27,  "and": 28,  "numreal": 36,  "numinteiro": 37, "nomestring": 38, "nomechar": 39}
 
 symbolsDict = { ">=": 29,  ">": 30,  "=": 31,  "<>": 32,  "<=": 33,  "<": 34,  "+": 35,  "]": 40,  "[": 41,  ";": 42,  ":": 43,  "/": 44,  "..": 45,  ".": 46,  ",": 47,  "*": 48,  ")": 49,  "(": 50,  "$": 51,  "-": 52 }
+
+with open('some.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+
+filename = "tokens.csv"
+# opening the file with w+ mode truncates the file
+f = open(filename, "w+")
+writer = csv.writer(f, delimiter=' ', quotechar=' ', quoting=csv.QUOTE_MINIMAL)
+
 
 def number_int(type_number):
     try: 
@@ -34,9 +45,11 @@ def comentario(line_actual):
 def lexico(aux_word,aux_word_size,word,line_words):  
     if word in wordsDict:
         print("Linha:",i+1,"| Palavra:",word,"| Token:",wordsDict[word])
-
+        print_line.append(wordsDict[word])   
+     
     elif word in symbolsDict:
         print("Linha:",i+1, "| Simbolo:",word,"| Token:",symbolsDict[word])
+        print_line.append(symbolsDict[word])   
     
     else:
         for k in range(0,aux_word_size):
@@ -55,6 +68,7 @@ def lexico(aux_word,aux_word_size,word,line_words):
                     if next_symbol == '"':
                         end_string = True
                         print("Linha:",i+1,"| Palavra:",get_name_string,"| Token:",wordsDict["nomestring"])
+                        print_line.append(wordsDict["nomestring"]) 
                         break
                     else:
                         count_string+=1
@@ -76,6 +90,7 @@ def lexico(aux_word,aux_word_size,word,line_words):
                     if next_symbol == "'":
                         end_char = True
                         print("Linha:",i+1,"| Palavra:",get_name_char,"| Token:",wordsDict["nomechar"])
+                        print_line.append(wordsDict["nomechar"]) 
                         break
                     else:
                         count_char+=1
@@ -97,6 +112,7 @@ def lexico(aux_word,aux_word_size,word,line_words):
                     if next_symbol == "`":
                         end_literal = True
                         print("Linha:",i+1,"| Palavra:",get_name_literal,"| Token:",wordsDict["literal"])
+                        print_line.append(wordsDict["literal"]) 
                         break
                     else:
                         count_literal+=1
@@ -112,10 +128,13 @@ def lexico(aux_word,aux_word_size,word,line_words):
             aux_type_number_real=num_real(word)
             if aux_type_number_int == True:
                 print("Linha:", i+1,"| Numero:",word,"eh POSITIVO e INTEIRO, Token:",wordsDict["numinteiro"])
+                print_line.append(wordsDict["numinteiro"]) 
             elif aux_type_number_real == True and aux_type_number_int == False:
                 print("Linha:", i+1,"| Numero:",word,"eh POSITIVO e REAL, Token:",wordsDict["numreal"])
+                print_line.append(wordsDict["numreal"]) 
             else:
                 print("Erro Lexico na linha:",i+1)
+                print_line.append("ERRO") 
 
         elif number and negative_number and not letter:##Verifica se os numeros são positivos
             word = re.sub("-", " ",word)
@@ -124,22 +143,27 @@ def lexico(aux_word,aux_word_size,word,line_words):
             aux_type_number_real=num_real(word)
             if aux_type_number_int == True:
                 print("Linha:", i+1,"| Numero:",word,"eh NEGATIVO e INTEIRO, Token:",wordsDict["numinteiro"])
+                print_line.append(wordsDict["numinteiro"]) 
             elif aux_type_number_real == True and aux_type_number_int == False:
                 print("Linha:", i+1,"| Numero:",word,"eh NEGATIVO e REAL, Token:",wordsDict["numreal"])
+                print_line.append(wordsDict["numreal"]) 
             else:
                 print("Erro Lexico na linha:",i+1)
+                print_line.append("ERRO") 
         
         else:
-            check_identifier = re.findall("[0-9|==|@|)|(|,|:|;]", word)
+            check_identifier = re.findall("[0-9|==|@|)|(|>=|>|=|<>|<=|<|+|]|[|;|:|/|..|.|,|*|'$'|-]", word)
 
             if check_identifier:
                 print("Erro Lexico na linha:",i+1)
+                print_line.append("ERRO") 
             elif  word != " ":
                 print ("Linha:",i+1,"| Palavra:",word,"| Token:",wordsDict["identificador"])
+                print_line.append(wordsDict["identificador"]) 
             
                 
 #with open(sys.argv[1]) as arq:
-with open("ex3.txt") as arq:
+with open("ex1.txt") as arq:
     read_data = arq.read()###read_data é o meu programa dentro de uma string
 
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
@@ -148,6 +172,7 @@ num_words=len(read_data)##NUmero total de palavras no arquivo
 aux_end_blobo_comment=0
 
 for i in range(0, num_lines):
+    print_line=[]
     line=read_data_lines[i].strip()#Ignorando os espacos/tab/enter
     line_words=line.split(' ')##Dividimos as linhas em palavras
     num_line_words=len(line_words)##NUmero de palavras na linha
@@ -174,3 +199,7 @@ for i in range(0, num_lines):
                 aux_word=list(line_words[j])
                 aux_word_size = len(aux_word)
                 check_lexico=lexico(aux_word,aux_word_size,line_words[j],line_words)
+
+    writer.writerow(print_line)
+
+f.close()
