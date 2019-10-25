@@ -8,7 +8,7 @@
             end;
 *#
 program nome_do_programa ;
-    procedure operacao_soma ( variavel_A : integer , variavel_B : integer ) 
+    procedure operacao_soma ( variavel_A : integer , variavel_B : integer ) ;
     begin
         if variavel_A <> variavel_B and variavel_A > variavel_B then 
         begin 
@@ -36,7 +36,5 @@ program nome_do_programa ;
 
         subt = constante_um - constante_dois ;
 
-        identificador_com_erro = t3nt4t1v4 ;
-
-    end;
+    end ;
 .

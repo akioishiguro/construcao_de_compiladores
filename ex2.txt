@@ -1,9 +1,9 @@
-program exemplo2;
+program exemplo ;
 
-	declaravariaveis variavel_A:integer; variavel_B:integer; 
+	declaravariaveis variavel_A : integer ; variavel_B : integer ; 
 
 	begin
 		variavel_A = 10
-        	variavel_B = 5
+        variavel_B = 5
 	end
 .

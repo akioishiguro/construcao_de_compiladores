@@ -10,7 +10,7 @@ program exemplo1 ;
 
 		#comentario ignorado
 
-		write ( ` literal ` , palavra_um ) ;
+		write ( ` literal kusfdskdjfksjd ` , palavra_um ) ;
 		write ( palavra_dois ) ;
         write ( palavra_tres ) ;
 	end

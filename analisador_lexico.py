@@ -7,9 +7,6 @@ wordsDict = {"write": 0, "while": 1, "until": 2,  "to": 3,  "then": 4,  "string"
 
 symbolsDict = { ">=": 29,  ">": 30,  "=": 31,  "<>": 32,  "<=": 33,  "<": 34,  "+": 35,  "]": 40,  "[": 41,  ";": 42,  ":": 43,  "/": 44,  "..": 45,  ".": 46,  ",": 47,  "*": 48,  ")": 49,  "(": 50,  "$": 51,  "-": 52 }
 
-with open('some.csv', 'w', newline='') as f:
-        writer = csv.writer(f)
-
 filename = "tokens.csv"
 # opening the file with w+ mode truncates the file
 f = open(filename, "w+")
@@ -155,15 +152,16 @@ def lexico(aux_word,aux_word_size,word,line_words):
             check_identifier = re.findall("[0-9|==|@|)|(|>=|>|=|<>|<=|<|+|]|[|;|:|/|..|.|,|*|'$'|-]", word)
 
             if check_identifier:
-                print("Erro Lexico na linha:",i+1)
+                print("Erro Lexico na linha:",i+1,"O erro eh:",word)
+                #exit()
                 print_line.append("ERRO") 
             elif  word != " ":
                 print ("Linha:",i+1,"| Palavra:",word,"| Token:",wordsDict["identificador"])
                 print_line.append(wordsDict["identificador"]) 
             
                 
-with open(sys.argv[1]) as arq:
-#with open("ex1.txt") as arq:
+#with open(sys.argv[1]) as arq:
+with open("ex3.txt") as arq:
     read_data = arq.read()###read_data é o meu programa dentro de uma string
 
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
