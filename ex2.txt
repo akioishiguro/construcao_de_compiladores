@@ -3,7 +3,7 @@ program exemplo ;
 	declaravariaveis variavel_A : integer ; variavel_B : integer ; 
 
 	begin
-		variavel_A = 10
-        variavel_B = 5
+		write ( variavel_A = 10 ) ;
+        write ( variavel_B = 5 ) ;
 	end
 .

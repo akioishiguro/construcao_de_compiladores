@@ -34,63 +34,11 @@ parsing_table = [
 ]
 
 token_dictionary = [
-    'write',
-    'while',
-    'until',
-    'to',
-    'then',
-    'string',
-    'repeat',
-    'real',
-    'read',
-    'program',
-    'procedure',
-    'or',
-    'of',
-    'literal',
-    'integer',
-    'if',
-    'identifier',
-    'empty',
-    'for',
-    'end',
-    'else',
-    'do',
-    'declaravariaveis',
-    'const',
-    'char',
-    'chamaprocedure',
-    'begin',
-    'array',
-    'and',
-    '>=',
-    '>',
-    '=',
-    '<>',
-    '<=',
-    '<',
-    '+',
-    'real',
-    'integer',
-    'string',
-    'char',
-    ']',
-    '[',
-    ';',
-    ':',
-    '/',
-    '..',
-    '.',
-    ',',
-    '*',
-    ')',
-    '(',
-    '$',
-    '-'
-]
+    'write', 'while', 'until','to','then','string','repeat','real','read','program','procedure','or','of','literal','integer','if','identifier','empty','for','end','else','do','declaravariaveis','const','char','chamaprocedure','begin','array','and','>=','>','=','<>','<=','<','+','real','integer','string','char',']','[',';',':','/','..','.',',','*',')','(','$','-'
+    ]
 
 
-class Pilha(object):
+class Stack(object):
     def __init__(self):
         self.dados = [51 , 53]
  
@@ -104,60 +52,75 @@ class Pilha(object):
     def vazia(self):
         return len(self.dados) == 0
 
-
-
-p = Pilha()
-X = p.dados[-1]#Topo da pilha
+aux_stack = Stack()
+X = aux_stack.dados[-1]#Topo da pilha
 
 with open('pushtable.json', encoding='utf-8') as json_file:
     push_table = json.loads(json_file.read())
 
-with open("tokens.csv") as arq:
+with open("tokens_syntax_analisys.csv") as arq:
     read_data = arq.read()###read_data é o meu programa dentro de uma string
 
+with open("tokens.csv") as arq_2:
+    takatika = arq_2.read()###read_data é o meu programa dentro de uma string
+
 read_data_lines=read_data.split('\n')###read_data_lines, separa todo o meu programa por linhas
+what_line=takatika.split('\n')
+num_what_line=len(what_line)
 num_lines=len(read_data_lines)
 num_words=len(read_data)##NUmero total de palavras no arquivo
-aux_end_blobo_comment=0
+line=read_data_lines[0].strip().split(' ')#Ignorando os espacos/tab/enter
+i=0 
+j=0
+count_tokens=1
 
-for i in range(0, num_lines):
-    print_line=[]
-    line=read_data_lines[i].strip()#Ignorando os espacos/tab/enter
-    line_words=line.split(' ')##Dividimos as linhas em palavras
-    num_line_words=len(line_words)##NUmero de palavras na linha    
-    
-    for j in range(0, num_line_words):
-        if line_words[j].strip():
-            a = line_words[j]
-            if a == "ERRO":
-                print("Erro lexico na linha:",i+1)
+while X != 51:
+    if i < len(line):
+        
+        a = line[i]
+        
+        if a == "ERRO":
+            print("Erro lexico na linha:",j+1)
+            exit()
+
+        a = int(a)
+
+        X=aux_stack.dados[-1] #Retorna ao ultimo elemento da pilha
+
+        if X == 17:#17 eh tokken de vazio
+            aux_stack.desempilha()
+            X = aux_stack.dados[-1]
+
+        elif X >= 0 and X <= 52: 
+            if X == a:#simbolo de entrada:
+                aux_stack.desempilha()
+            else:
+                print('erro:', token_dictionary[X],"linha:",j+1)
                 exit()
-            a = int(a)
-            while X != 51:
-                X=p.dados[-1]
-                if X == 17:
-                    p.desempilha()
-                    X = p.dados[-1]
-                elif X >= 0 and X <= 52:        
-                    if X == a:#simbolo de entrada:
-                        p.desempilha()
-                        break
-                    else:
-                        print('erro:', token_dictionary[X],"linha:",i+1)
-                        exit()
-                else: 
-                    production = parsing_table[(X-53)][a]
-                    if production != -1:
-                        p.desempilha()
-                        teste=len(push_table[str(production)])
-                        production_list = push_table[str(production)]
-                        production_list = production_list [::-1]
-                        for token in production_list:
-                            p.empilha(token)                        
-                            X=p.dados[-1]
-                    else:
-                        print("erro inha:",i+1)
-                        exit()   
+            while what_line[j] == '':
+                j+=1
+            aux_line=len(what_line[j].strip().split(' '))
+            if j<=num_what_line and count_tokens==aux_line:
+                #print ("linha: ",j+1)
+                count_tokens=0
+                j+=1
+            count_tokens+=1
+            i+=1
+        else:#Caso X seja nao terminal
+            production = parsing_table[(X-53)][a]
+            if production != -1:
+                aux_stack.desempilha()
+                production_list = push_table[str(production)]
+                production_list = production_list [::-1]
 
-            print("Finalizado!")  
+                for token in production_list:
+                    aux_stack.empilha(token)                        
 
+                X=aux_stack.dados[-1]
+            else:
+                print("erro linha:",j+1)
+                exit()
+    else:
+        break
+
+print("Finalizado!") 

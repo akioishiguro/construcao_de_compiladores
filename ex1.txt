@@ -1,17 +1,15 @@
-program exemplo1 ;
-
+program exemplo ;
 
 	declaravariaveis palavra_um : string ; palavra_dois : string ; palavra_dois : char ;
 
 	begin
-		palavra_um = " Hello " ;
-		palavra_dois = " World! " ;
-        palavra_tres = ' a ' ;
 
 		#comentario ignorado
 
-		write ( ` literal kusfdskdjfksjd ` , palavra_um ) ;
-		write ( palavra_dois ) ;
-        write ( palavra_tres ) ;
+		write ( ` literal ` ) ;
+		write ( palavra_um = " Hello "  ) ;
+        write ( palavra_dois = " World! "  ) ;
+		write ( palavra_tres = ' a '  ) ;
+
 	end
 .

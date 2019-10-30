@@ -1,5 +1,5 @@
 #Comentario de linha
-#*    
+#*   
         Comentario de bloco! 
         program nome_do_programa;
             procedure nome_do_procedimento (paramentros_A:tipo ,parametro_B:tipo) 
@@ -8,33 +8,33 @@
             end;
 *#
 program nome_do_programa ;
-    procedure operacao_soma ( variavel_A : integer , variavel_B : integer ) ;
+    procedure operacao_soma ( variavel_A : integer ; variavel_B : integer ; ) 
     begin
-        if variavel_A <> variavel_B and variavel_A > variavel_B then 
+        if [ variavel_A <> variavel_B ] then
         begin 
-            soma = 10 + 5
-			write ( soma )
+            write ( soma = 10 + 5 )
+			#write ( soma );
         end ;
     end ;
 
     const constante_um = real ; constante_dois = real ;
     
-    declaravariaveis variavel_A : integer ; variavel_B : integer ; 
+    declaravariaveis variavel_A : integer ; variavel_B : integer ;
     
     begin
-        variavel_A = 10
-        variavel_B = 5
-        chamaprocedure operacao_soma ( variavel_A , variavel_B )
+        write ( variavel_A = 10 ) ;
+        write ( variavel_B = 5 ) ;
+        chamaprocedure operacao_soma ( variavel_A , variavel_B ) ;
 
-        num_negativo_inteiro = -1 ;
-        num_positivo_inteiro : 2 ;
+        write ( num_negativo_inteiro = -1 ) ;
+        write ( num_positivo_inteiro = 2 ) ;
 
-        num_negativo_real = -12.456 ;
-        num_positivo_real = 789.10 ;
+        write ( num_negativo_real = -12.456 ) ;
+        write ( num_positivo_real = 789.10 ) ;
 
-        sinal_de_menos = - 6 ;
+        write ( sinal_de_menos = - 6 ) ;
 
-        subt = constante_um - constante_dois ;
+        write ( subt = constante_um - constante_dois ) ;
 
-    end ;
+    end
 .
