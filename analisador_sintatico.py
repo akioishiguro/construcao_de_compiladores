@@ -87,6 +87,9 @@ while X != 51:
 
         X=aux_stack.dados[-1] #Retorna ao ultimo elemento da pilha
 
+        print("X:",X,"a:",a)
+        print(aux_stack.dados[::-1])
+
         if X == 17:#17 eh tokken de vazio
             aux_stack.desempilha()
             X = aux_stack.dados[-1]
@@ -117,6 +120,7 @@ while X != 51:
                     aux_stack.empilha(token)                        
 
                 X=aux_stack.dados[-1]
+
             else:
                 print("erro linha:",j+1)
                 exit()

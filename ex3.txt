@@ -1,6 +1,5 @@
-#Comentario de linha
-#*   
-        Comentario de bloco! 
+# Comentario de linha
+#* Comentario de bloco! 
         program nome_do_programa;
             procedure nome_do_procedimento (paramentros_A:tipo ,parametro_B:tipo) 
             begin
